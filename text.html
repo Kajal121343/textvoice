@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Text-To-Speech</title>
+    <style>
+ body {
+           
+           
+           background-image: url('typing.avif');
+           background-position: center;
+           background-repeat: no-repeat;
+           background-size: cover; 
+           height: 100vh;
+          
+       }
+       h2{
+       color:red;
+        border: 2px solid purple;
+text-align: center;
+
+       }
+       h3{color:red;
+        border: 2px solid purple;
+text-align: center;
+
+       }
+       #myText
+       {
+        text-align: center;
+        
+       }
+   
+    </style>
+   
+</head>
+<body>
+    <a href="index.html">Back</a>
+    <h2 ><b>Welcome in my site.................</b></h2>
+    <h3>you can write whatever you want ...............I will convert it in voice.............</h3>
+    <textarea id="myText" style="width: 1000px; height: 200px;"></textarea> 
+    <button id="btn" onclick="textToSpeech()">Speech</button> 
+    <script>
+        const textInput = document.querySelector("#myText");
+        const myBtn = document.querySelector("#btn");
+
+        function textToSpeech() { 
+            const msg = new SpeechSynthesisUtterance();
+            msg.text = textInput.value;
+            msg.voice = speechSynthesis.getVoices()[0]; 
+            speechSynthesis.speak(msg);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Speech-To-Text</title>
+    <style>
+        body {
+            background-image: url('voice.avif');
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end; 
+            align-items: center;
+            margin: 0; 
+            padding: 0; 
+        }
+
+        h3 {
+            color: red;
+            border: 2px solid purple;
+            text-align: center;
+            margin-bottom: 10px; 
+        }
+
+        #myText {
+            width: 1000px;
+            height: 200px;
+            text-align: center;
+            margin-bottom: 20px; 
+        }
+
+        #speechBtn {
+            margin-bottom: 20px; 
+        }
+    </style>
+</head>
+<body>
+   
+    <h3>You can speak, and I will convert it to text...</h3>
+    <a href="index.html">Back</a>
+    <textarea id="myText"></textarea> 
+    <button id="speechBtn" onclick="startSpeechRecognition()">Start Speech Recognition</button> 
+    <script>
+        const textInput = document.querySelector("#myText");
+        const speechBtn = document.querySelector("#speechBtn");
+
+        let recognition = new webkitSpeechRecognition() || new SpeechRecognition(); 
+        recognition.continuous = false; 
+
+        recognition.onresult = function(event) { 
+            textInput.value += event.results[0][0].transcript; 
+        }
+
+        function startSpeechRecognition() {
+            recognition.start(); 
+        }
+    </script>
+</body>
+</html>
