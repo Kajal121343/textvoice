@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neural Text-to-Speech</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+        }
+
+        body {
+            background: #0a0a10;
+            background-image: radial-gradient(circle at 50% 0%, #1a1a3a 0%, #0a0a10 70%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            color: white;
+        }
+
+        .app-container {
+            background: rgba(15, 15, 25, 0.8);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(0, 242, 254, 0.2);
+            border-radius: 20px;
+            padding: 40px;
+            width: 100%;
+            max-width: 700px;
+            box-shadow: 0 0 40px rgba(0, 242, 254, 0.1);
+            position: relative;
+        }
+
+        .back-btn {
+            position: absolute;
+            top: -20px;
+            left: 20px;
+            background: #1a1a3a;
+            color: #00f2fe;
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            border: 1px solid #00f2fe;
+            transition: all 0.3s;
+        }
+
+        .back-btn:hover {
+            background: #00f2fe;
+            color: #0a0a10;
+            box-shadow: 0 0 15px #00f2fe;
+        }
+
+        h2 {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+
+        h3 {
+            text-align: center;
+            color: #8888a0;
+            font-weight: 400;
+            margin-bottom: 30px;
+            font-size: 1rem;
+        }
+
+        /* Custom Textarea */
+        .input-group {
+            position: relative;
+            margin-bottom: 30px;
+        }
+
+        textarea {
+            width: 100%;
+            height: 200px;
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            color: #fff;
+            font-size: 1.1rem;
+            resize: none;
+            outline: none;
+            transition: all 0.3s;
+        }
+
+        textarea:focus {
+            border-color: #00f2fe;
+            box-shadow: 0 0 20px rgba(0, 242, 254, 0.2);
+        }
+
+        textarea::placeholder {
+            color: #555;
+        }
+
+        /* Neon Button */
+        .neon-btn {
+            width: 100%;
+            padding: 18px;
+            background: transparent;
+            color: #00f2fe;
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border: 2px solid #00f2fe;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .neon-btn:hover {
+            background: #00f2fe;
+            color: #0a0a10;
+            box-shadow: 0 0 30px #00f2fe, 0 0 10px #00f2fe inset;
+        }
+
+        .neon-btn:active {
+            transform: scale(0.98);
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <a href="front.html" class="back-btn">← Dashboard</a>
+        
+        <h2>Text to Speech</h2>
+        <h3>Input your text below and let the AI speak</h3>
+        
+        <div class="input-group">
+            <textarea id="myText" placeholder="Type your message here..."></textarea> 
+        </div>
+        
+        <button id="btn" class="neon-btn" onclick="textToSpeech()">Initiate Speech</button> 
+    </div>
+
+    <script>
+        const textInput = document.querySelector("#myText");
+        const btn = document.querySelector("#btn");
+
+        function textToSpeech() { 
+            if(textInput.value.trim() === "") {
+                textInput.focus();
+                textInput.style.borderColor = "red";
+                setTimeout(() => textInput.style.borderColor = "rgba(255,255,255,0.1)", 1000);
+                return;
+            }
+            
+            // Button visual feedback
+            btn.innerText = "Speaking...";
+            btn.style.color = "#0a0a10";
+            btn.style.background = "#00f2fe";
+
+            const msg = new SpeechSynthesisUtterance();
+            msg.text = textInput.value;
+            msg.lang = 'en-US'; 
+            
+            msg.onend = function() {
+                btn.innerText = "Initiate Speech";
+                btn.style.color = "#00f2fe";
+                btn.style.background = "transparent";
+            };
+
+            speechSynthesis.speak(msg);
+        }
+    </script>
+</body>
+</html>
